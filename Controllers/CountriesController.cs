@@ -22,7 +22,9 @@ namespace BlockedCountries.Api.Controllers
             if (string.IsNullOrWhiteSpace(countryCode))
                 return BadRequest("Country code is required");
 
-            if (!_blockedCountryService.AddCountry(countryCode))
+            var info = new CountryInfo { CountryCode = countryCode };
+
+            if (!_blockedCountryService.AddCountry(info))
                 return BadRequest($"Country '{countryCode}' is already blocked");
 
             return Ok($"Country '{countryCode}' blocked");
@@ -43,5 +45,7 @@ namespace BlockedCountries.Api.Controllers
             var result = _blockedCountryService.GetPaged(page, pageSize, search);
             return Ok(result);
         }
+        //
+
     }
 }

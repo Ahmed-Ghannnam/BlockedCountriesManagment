@@ -1,4 +1,5 @@
 using BlockedCountries.BL.Managers;
+using BlockedCountries.BL.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,11 +28,14 @@ builder.Services.AddCors(options =>
 
 #region Service
 
-builder.Services.AddScoped<BlockedCountryService>();
+builder.Services.AddSingleton<BlockedCountryService>();
+builder.Services.AddSingleton<GeoLocationService>();
+builder.Services.AddSingleton<LogService>();
+builder.Services.AddHttpClient<GeoLocationService>();
 
 #endregion
 
-builder.Services.AddHttpClient();
+//builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
